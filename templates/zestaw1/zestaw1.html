@@ -1,0 +1,87 @@
+{% extends 'index.html' %}
+{% block content %}
+<!-- Zestaw 1 -->
+<!-- Kodowanie -->
+<div class="container rounded" style="margin-top: 30px; padding: 20px; width: 900px; background-color: rgb(233, 233, 233);">
+    <h4 class="text-left" style="margin-bottom: 20px;">Kodowanie grafu</h4>
+    <form id="graphCodeForm">
+        <div class="form-group">
+          <label for="graphCodeType" style="margin-left: 7px;">Wybierz kodowanie grafu</label>
+          <select class="form-control form-control-sm" id="graphCodeType">
+            <option value="adjmatrix">Macierz sąsiedztwa</option>
+            <option value="adjlist">Lista sąsiedztwa</option>
+            <option value="incmatrix">Macierz incydencji</option>
+          </select>
+          <small id="graphCodeHelp" class="form-text text-muted" style="margin-left: 7px;">
+            W liście sąsiedztwa na początku każdego wiersza musi się znajdować numer węzła!
+          </small>
+        </div>
+        <div class="form-group" style="margin-top: 10px;">
+            <label for="graphCodeId" style="margin-left: 7px;">Wprowadź kodowanie grafu</label>
+            <textarea class="form-control" id="graphCode" rows="5"></textarea>
+        </div>
+        <button type="button" onclick="submitCodedGraph()" class="btn btn-primary" style="margin-top: 10px;">Submit</button>
+        <div class="form-group" id="codeExceptionContainer">
+        </div>
+    </form>
+    
+</div>  
+
+<!-- Losowanie -->
+<div class="container rounded" style="margin-top: 20px; padding: 20px; width: 900px; background-color: rgb(233, 233, 233);">
+    <h4 class="text-left" style="margin-bottom: 20px;">Generowanie losowego grafu</h4>
+    <form id="graphRandomizeForm">
+        <div class="form-group">
+            <label for="graphRandomType" style="margin-left: 7px;">Wybierz typ losowania</label>
+            <select class="form-control form-control-sm" id="graphRandomType">
+                <option value="random">Losowanie z liczbą krawędzi</option>
+                <option value="probability">Losowanie z prawdobodobienśtwem</option>
+            </select>
+        </div>
+        <div class="row g-3 align-items-center" style="margin-top: 10px">
+            <div class="col-auto">
+              <label class="col-form-label">Wprowadź paraametry G (</label>
+            </div>
+            <div class="col-auto" style="padding: 2px;">
+              <input type="text" id="firstRandomParam" class="form-control form-control-sm" style="width: 70px;">
+            </div>
+            <div class="col-auto" style="padding: 2px;">
+                <input type="text" id="secondRandomParam" class="form-control form-control-sm" style="width: 70px;">
+            </div>
+            <div class="col-auto">
+                <label class="col-form-label">)</label>
+            </div>
+          </div>
+        <button type="button" onclick="submitRandomGraph()" class="btn btn-primary" style="margin-top: 10px;">Submit</button>
+        <div class="form-group" id="randomExceptionContainer">
+        </div>
+    </form>
+</div>
+
+ <!-- Reprezentacja grafu-->
+<div class="container rounded" style="margin-top: 20px; padding: 20px; width: 900px; background-color: rgb(233, 233, 233);">
+    <h4 class="text-left" style="margin-bottom: 20px;">Reprezentacja grafu</h4>
+    <div class="row">
+        <div class="form-group" style="margin-top: 10px;">
+            <label for="graphAdjacencyMatrix" style="margin-left: 7px;">Macierz sąsiedztwa</label>
+            <textarea class="form-control" id="graphAdjacencyMatrix" rows="6" readonly></textarea>
+        </div>
+        <div class="form-group" style="margin-top: 10px;">
+            <label for="graphAdjacencyList style="margin-left: 7px;">Lista sąsiedztwa</label>
+            <textarea class="form-control" id="graphAdjacencyList" rows="6" readonly></textarea>
+        </div>
+        <div class="form-group" style="margin-top: 10px;">
+            <label for="graphIncedencyMatrix" style="margin-left: 7px;">Macierz incydencji</label>
+            <textarea class="form-control" id="graphIncedencyMatrix" rows="6" readonly></textarea>
+        </div>
+    </div>
+</div>
+
+<!-- Wykres -->
+<div class="container rounded" style="margin-top: 20px; padding: 20px; width: 900px; background-color: rgb(233, 233, 233);">
+    <h4 class="text-left" style="margin-bottom: 20px;">Wykres grafu</h4>
+    <img  alt="Graph" style="width: 700px; height: 600px;" id="graphImage">
+</div>
+
+<script src="{{ url_for('static', filename='zestaw1.js') }}"></script>
+{% endblock %}
