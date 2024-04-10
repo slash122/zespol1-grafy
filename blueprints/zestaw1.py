@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, url_for, request
+from flask import Blueprint, render_template, request
 from utils.parse import graph_from_string
 from utils.representations import get_graph_representations, matrix_to_string
 from utils.plot import get_plot_as_img
