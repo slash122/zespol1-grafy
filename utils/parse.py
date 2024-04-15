@@ -3,6 +3,15 @@ import numpy as np
 import re
 
 
+def parse_array(array_string: str):
+    array = []
+    for value in re.split(r",| ", array_string): #Zostawia "" więc trzeba to wykluczyć niżej
+        if value == "":
+            continue
+        array.append(int(value)) 
+    return array
+
+
 # Dla macierzy sąsiedztwa lub incydencji
 def parse_matrix(matrix_string: str):
     matrix = []

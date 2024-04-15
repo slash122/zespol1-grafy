@@ -1,0 +1,28 @@
+{% extends 'index.html' %}
+{% block content %}
+<!-- Zestaw 2 -->
+<!-- Kodowanie -->
+<div class="container rounded" style="margin-top: 30px; padding: 20px; width: 900px; background-color: rgb(233, 233, 233);">
+    <h4 class="text-left" style="margin-bottom: 20px;">1. Czy ciąg graficzny</h4>
+    <form id="isBinaryForm">
+        <div class="form-group">
+          <label for="graphicSequenceInput" style="margin-left: 7px;">Wprowadź ciąg graficzny</label>
+          <input type="text" id="graphicSequenceInput" class="form-control form-control-sm">
+          <small class="form-text text-muted" style="margin-left: 7px;">
+            Liczby muszą być oddzielone przecinkiem lub spacją!
+          </small>
+        </div>
+        <button type="button" onclick="processGraphicSeq()" class="btn btn-primary" style="margin-top: 10px;">Submit</button>
+        <div class="form-group" id="sequenceExceptionContainer">
+        </div>
+    </form>
+</div> 
+
+<!-- Wykres -->
+<div class="container rounded" style="margin-top: 20px; padding: 20px; width: 900px; background-color: rgb(233, 233, 233);">
+    <h4 class="text-left" style="margin-bottom: 20px;">Wykres grafu</h4>
+    <img  alt="Graph" style="width: 700px; height: 600px;" id="graphImage">
+</div>
+
+<script src="{{ url_for('static', filename='zestaw2.js') }}"></script>
+{% endblock %}

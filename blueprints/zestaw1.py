@@ -12,7 +12,7 @@ zestaw1 = Blueprint('zestaw1', __name__, template_folder='../templates/zestaw1')
 
 @zestaw1.route('/')
 def get_zestaw1():
-    return render_template('zestaw1.html', word = "Hello World!")
+    return render_template('zestaw1.html')
 
 
 @zestaw1.route('/process', methods=['POST'])
@@ -30,10 +30,11 @@ def process():
 
 @zestaw1.route('/random', methods=['POST'])
 def random_graph():
-    random_type = request.form['randomType']
-    param1 = int(request.form['param1'])
-    param2 = request.form['param2']
     try:
+        random_type = request.form['randomType']
+        param1 = int(request.form['param1'])
+        param2 = request.form['param2']
+
         G: nx.Graph
         if random_type == "random":
             param2 = int(param2)

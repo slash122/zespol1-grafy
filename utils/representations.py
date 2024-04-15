@@ -1,3 +1,4 @@
+from utils.sort import sort_dict_by_keys
 import networkx as nx
 import numpy as np
 
@@ -11,7 +12,7 @@ def adjlist_to_string(adjlist):
 
 
 def get_graph_representations(G : nx.Graph):
-    adjmatrix_string = matrix_to_string(nx.to_numpy_array(G).astype(int).tolist())
-    adjlist_string = adjlist_to_string(nx.to_dict_of_lists(G))
-    incmatrix_string = matrix_to_string(nx.incidence_matrix(G).todense().astype(int).tolist())
+    adjmatrix_string = matrix_to_string( nx.to_numpy_array(G).astype(int).tolist() )
+    adjlist_string = adjlist_to_string( sort_dict_by_keys(nx.to_dict_of_lists(G)) )
+    incmatrix_string = matrix_to_string( nx.incidence_matrix(G).todense().astype(int).tolist() )
     return {"adjmatrix": adjmatrix_string, "adjlist": adjlist_string, "incmatrix": incmatrix_string} 
