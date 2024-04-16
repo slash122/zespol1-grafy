@@ -57,7 +57,7 @@ def max_cohesive():
 @zestaw2.route('/euler', methods=['POST'])
 def rand_euler():
     try:
-        rand_num = request.form['randNum']
+        rand_num = request.form['eulerRandNum']
         adj_matrix = generate_Euler_graph(int(rand_num))
         matrix_str = matrix_to_string(adj_matrix)
         G = graph_from_string(matrix_str, "adjmatrix")

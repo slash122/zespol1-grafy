@@ -81,13 +81,13 @@ function processCohesive() {
 
 
 function processEuler() {
-    let randNum = document.getElementById("eulerRandNum").value;
+    let eulerRandNum = document.getElementById("eulerRandNum").value;
     
     $.ajax({
         type: "POST",
         url: "/zestaw2/euler",
         data: {
-            randNum: randNum,
+            eulerRandNum: eulerRandNum,
         },
         success: function (response) {
             let data = JSON.parse(response);
