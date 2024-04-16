@@ -1,4 +1,5 @@
 import networkx as nx
+import numpy as np
 # from draw import draw_with_circle
 
 # sprawdza, czy dana sekwencja liczb naturalnych jest ciągiem graficznym
@@ -79,3 +80,39 @@ def create_graph(A):
 
         # zerujemy stopien wierzholka, z ktorego prowadzilismy krawedzie do pozostalych
         A[0] = 0
+
+
+# A - ciag graficzny, r_num - liczba randomizacji 
+def rand_graph_edges(A, r_num):
+    # tworzymy graf z ciagu graficznego
+    G = create_graph(A)
+
+    # powtarzamy proces randomizacji r_num razy
+    for i in range(r_num):
+        swapped = False
+        # powtarzamy w petli dopoki nie uda sie zamienic wierzcholkow
+        while not swapped:
+            # losujemy 4 niepowtarzajace sie wierzcholki grafu
+            node_list = np.random.choice(np.arange(1, len(A)+1), 4, replace=False)
+
+            # tworzymy 2 krawedzie - zakladamy ze istnieja
+            edge1 = (node_list[0], node_list[1])
+            edge2 = (node_list[2], node_list[3])
+
+            # 2 pozostale krawedzie z uzyciem tych samych wierzcholkow - zakladamy ze nie istnieja
+            new_edge1 = (node_list[0], node_list[3])
+            new_edge2 = (node_list[1], node_list[2])
+
+            # sprawzdamy czy nasze zalozenia sa prawdziwe
+            if G.has_edge(*edge1) and G.has_edge(*edge2) and not G.has_edge(*new_edge1) and not G.has_edge(*new_edge2):
+                # jesli tak, usuwamy 2 istniejace krawedzie
+                G.remove_edge(*edge1)
+                G.remove_edge(*edge2)
+                # oradodajemy 2 nowe krawedzie
+                G.add_edge(*new_edge1)
+                G.add_edge(*new_edge2)
+                swapped = True
+            # jesli zalozenia sie nie sprawdzily - losujemy ponownie wierzcholki
+
+    # zwracamy graf
+    return G

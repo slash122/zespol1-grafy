@@ -1,12 +1,12 @@
 {% extends 'index.html' %}
 {% block content %}
 <!-- Zestaw 2 -->
-<!-- Kodowanie -->
+<!-- Ciag graficzny -->
 <div class="container rounded" style="margin-top: 30px; padding: 20px; width: 900px; background-color: rgb(233, 233, 233);">
     <h4 class="text-left" style="margin-bottom: 20px;">1. Czy ciąg graficzny</h4>
     <form id="isBinaryForm">
         <div class="form-group">
-          <label for="graphicSequenceInput" style="margin-left: 7px;">Wprowadź ciąg graficzny</label>
+          <label for="graphicSequenceInput" style="margin-left: 7px;">Wprowadź ciąg</label>
           <input type="text" id="graphicSequenceInput" class="form-control form-control-sm">
           <small class="form-text text-muted" style="margin-left: 7px;">
             Liczby muszą być oddzielone przecinkiem lub spacją!
@@ -17,6 +17,108 @@
         </div>
     </form>
 </div> 
+
+<!-- Randomowy ciag -->
+<div class="container rounded" style="margin-top: 30px; padding: 20px; width: 900px; background-color: rgb(233, 233, 233);">
+  <h4 class="text-left" style="margin-bottom: 20px;">2. Randomizacja grafów prostych o zadanych stopniach wierzchołków</h4>
+  <form>
+      <div class="form-group">
+        <label for="randGraphicSequenceInput" style="margin-left: 7px;">Wprowadź seed (ciąg graficzny)</label>
+        <input type="text" id="randGraphicSequenceInput" class="form-control form-control-sm">  
+      </div>
+      <div class="form-group">
+        <label for="randValInput" style="margin-left: 7px; margin-top: 10px;">Wprowadź liczbę randomizacji</label>
+        <input type="text" id="randValInput" class="form-control form-control-sm">
+      </div>
+      <button type="button" onclick="processRandGraphicSeq()" class="btn btn-primary" style="margin-top: 10px;">Submit</button>
+      <div class="form-group" id="randSequenceExceptionContainer">
+      </div>
+  </form>
+</div> 
+
+<!-- Spojny  -->
+<div class="container rounded" style="margin-top: 30px; padding: 20px; width: 900px; background-color: rgb(233, 233, 233);">
+  <h4 class="text-left" style="margin-bottom: 20px;">3. Największa spójna składowa na grafie</h4>
+  <form id="cohesiveSubgraphForm">
+      <div class="form-group" style="margin-top: 10px;">
+          <label for="cohesiveCode" style="margin-left: 7px;">Wprowadź kodowanie grafu w postaci listy sąsiedztwa</label>
+          <textarea class="form-control" id="cohesiveCode" rows="5"></textarea>
+      </div>
+      <button type="button" onclick="processCohesive()" class="btn btn-primary" style="margin-top: 10px;">Submit</button>
+      <div class="form-group" id="cohesiveExceptionContainer">
+      </div>
+      <div class="form-group" style="margin-top: 10px;">
+        <label for="cohesiveResult" style="margin-left: 7px;">Wynik:</label>
+        <textarea class="form-control" id="cohesiveResult" rows="2" readonly></textarea>
+    </div>
+  </form>
+</div>
+
+
+<!-- Euler  -->
+<div class="container rounded" style="margin-top: 30px; padding: 20px; width: 900px; background-color: rgb(233, 233, 233);">
+  <h4 class="text-left" style="margin-bottom: 20px;">4. Losowy graf eulerowski i cykl Eulera</h4>
+  <form id="cohesiveSubgraphForm">
+      <div class="form-group" style="margin-top: 10px;">
+          <label for="eulerRandNum" style="margin-left: 7px;">Wprowadź liczbę wierzchołków grafu</label>
+          <input type="text" id="eulerRandNum" class="form-control form-control-sm" style="width: 140px;">
+      </div>
+      <button type="button" onclick="processEuler()" class="btn btn-primary" style="margin-top: 10px;">Submit</button>
+      <div class="form-group" id="eulerExceptionContainer">
+      </div>
+      <div class="form-group" style="margin-top: 10px;">
+        <label for="eulerMatrixResult" style="margin-left: 7px;">Graf:</label>
+        <textarea class="form-control" id="eulerMatrixResult" rows="5" readonly></textarea>
+        <label for="eulerPathResult" style="margin-left: 7px;">Ścieżka:</label>
+        <textarea class="form-control" id="eulerPathResult" rows="2" readonly></textarea>
+      </div>
+  </form>
+</div>
+
+
+<!-- K regularny -->
+<div class="container rounded" style="margin-top: 30px; padding: 20px; width: 900px; background-color: rgb(233, 233, 233);">
+  <h4 class="text-left" style="margin-bottom: 20px;">5. Losowy graf k-regularny</h4>
+  <form>
+    <div class="row g-3 align-items-center">
+      <div class="col-auto">
+        <label class="col-form-label">Wprowadź parametry. n:</label>
+      </div>
+      <div class="col-auto" style="padding: 2px;">
+        <input type="text" id="randomKRegularParam1" class="form-control form-control-sm" style="width: 70px;">
+      </div>
+      <div class="col-auto">
+        <label class="col-form-label">, k:</label>
+      </div>
+      <div class="col-auto" style="padding: 2px;">
+          <input type="text" id="randomKRegularParam2" class="form-control form-control-sm" style="width: 70px;">
+      </div>
+    </div>
+      <button type="button" onclick="processRandomKRegular()" class="btn btn-primary" style="margin-top: 10px;">Submit</button>
+      <div class="form-group" id="randomKRegularExceptionContainer">
+      </div>
+  </form>
+</div>
+
+
+<!-- Hamiltonowski -->
+<div class="container rounded" style="margin-top: 30px; padding: 20px; width: 900px; background-color: rgb(233, 233, 233);">
+  <h4 class="text-left" style="margin-bottom: 20px;">6. Graf Hamiltonowski (Na podstawie losowego grafu Eulerowskiego)</h4>
+  <form>
+    <div class="form-group" style="margin-top: 10px;">
+      <label for="eulerHamiltonRandNum" style="margin-left: 7px;">Wprowadź liczbę wierzchołków grafu</label>
+      <input type="text" id="eulerHamiltonRandNum" class="form-control form-control-sm" style="width: 140px;">
+    </div>
+    <button type="button" onclick="processHamilton()" class="btn btn-primary" style="margin-top: 10px;">Submit</button>
+      <div class="form-group" id="eulerHamiltonExceptionContainer">
+      </div>
+      <div class="form-group" style="margin-top: 10px;">
+        <label for="hamiltonPathResult" style="margin-left: 7px;">Ścieżka:</label>
+        <textarea class="form-control" id="hamiltonPathResult" rows="2" readonly></textarea>
+      </div>
+  </form>
+</div>
+
 
 <!-- Wykres -->
 <div class="container rounded" style="margin-top: 20px; padding: 20px; width: 900px; background-color: rgb(233, 233, 233);">

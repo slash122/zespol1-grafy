@@ -67,3 +67,28 @@ def graph_from_string(graph_string: str, graph_type: str):
             raise ValueError("Unexpected graph type!")
     
     return G
+
+
+# Dla macierzy sąsiedztwa lub incydencji
+def parse_matrix_any(matrix_string: str):
+    matrix = []
+
+    for row in matrix_string.splitlines():
+        parsed_row = []
+        
+        for value in re.split(r",| ", row): #Zostawia "" więc trzeba to wykluczyć niżej
+            if value == "":
+                continue
+            parsed_row.append(int(value))  
+        
+        matrix.append(parsed_row)
+    
+    return matrix
+
+
+
+def inc_matrix_by_one(matrix):
+    for i in range(len(matrix)):
+        for j in range(len(matrix[i])):
+            matrix[i][j] += 1
+    return matrix
