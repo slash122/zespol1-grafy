@@ -90,8 +90,9 @@ def rand_graph_edges(A, r_num):
     # powtarzamy proces randomizacji r_num razy
     for i in range(r_num):
         swapped = False
+        attempts = 0
         # powtarzamy w petli dopoki nie uda sie zamienic wierzcholkow
-        while not swapped:
+        while not swapped and attempts < 100:
             # losujemy 4 niepowtarzajace sie wierzcholki grafu
             node_list = np.random.choice(np.arange(1, len(A)+1), 4, replace=False)
 
@@ -113,6 +114,8 @@ def rand_graph_edges(A, r_num):
                 G.add_edge(*new_edge2)
                 swapped = True
             # jesli zalozenia sie nie sprawdzily - losujemy ponownie wierzcholki
+            else:
+                attempts += 1
 
     # zwracamy graf
     return G

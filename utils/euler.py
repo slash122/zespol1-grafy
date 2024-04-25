@@ -4,6 +4,7 @@ from utils.representations import from_adj_matrix_to_adj_list
 from utils.graphseq import degree_seq, rand_graph_edges
 # from draw import draw_with_circle
 from utils.cohesive import components
+import random
 
 
 # tworzy losowy graf eulerowski
@@ -95,3 +96,74 @@ def euler_path(G):
     # print(path)
     return path
     #  
+
+
+def fixed_random_euler(num_nodes):
+    
+    def connected_to_all_odd(G, node):    
+        _odd_degree_nodes = [node for node, degree in G.degree() if degree % 2 == 1]
+        for i in _odd_degree_nodes:
+            if not G.has_edge(node, i) and not node == i:
+                return False
+        return True
+
+    def get_unconnected_even(G, node):
+        _even_degree_nodes = [node for node, degree in G.degree() if degree % 2 == 0]
+        for i in _even_degree_nodes:
+            if not G.has_edge(node, i):
+                return i
+        return None #Faktycznie funkcja nigdy nie zwroci None
+
+    # Tworzymy losowy graf
+    # Hack
+    G = nx.random_tree(num_nodes)
+    
+    # Lista wierzchołków o nieparzystym stopniu
+    # odd_degree_nodes = [node for node, degree in G.degree() if degree % 2 == 1]
+    # even_degree_nodes = [node for node, degree in G.degree() if degree % 2 == 0]
+    odd_degree_nodes = [node for node, degree in G.degree() if degree % 2 == 1]
+    
+    it = 0
+    # Dopóki mamy wierzchołki o nieparzystym stopniu, dodajemy między nimi krawędzie
+    while len(odd_degree_nodes) > 0:
+        # Wybieramy losowo dwa wierzchołki o nieparzystym stopniu
+        
+        node1, node2 = random.sample(odd_degree_nodes, 2)
+        
+        if (connected_to_all_odd(G, node1)):
+            node2 = get_unconnected_even(G, node1)
+
+        # Dodajemy krawędź między wybranymi wierzchołkami
+        G.add_edge(node1, node2)
+        
+        # Aktualizujemy listę wierzchołków o nieparzystym stopniu
+        it += 1
+        
+        odd_degree_nodes = [node for node, degree in G.degree() if degree % 2 == 1]
+        
+        if it > 200:
+            raise Exception("Too many iterations")
+    
+    return G
+
+
+def fixed_euler_path(G):
+    odd_degree_nodes = [node for node, degree in G.degree() if degree % 2 == 1]
+    if len(odd_degree_nodes) > 2:
+        return None
+
+    start_node = odd_degree_nodes[0] if odd_degree_nodes else list(G.nodes)[0]
+
+    stack, circuit = [start_node], []
+
+    while stack:
+        current_node = stack[-1]
+        
+        if G.degree(current_node) > 0:
+            stack.append(list(G.neighbors(current_node))[0])
+            G.remove_edge(current_node, stack[-1])
+        
+        else:
+            circuit.append(stack.pop())
+
+    return circuit[::-1]

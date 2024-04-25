@@ -4,9 +4,9 @@ from utils.parse import parse_array, parse_matrix_any, inc_matrix_by_one, graph_
 from utils.plot import get_plot_as_img
 from utils.graphseq import create_graph, rand_graph_edges
 from utils.cohesive import components
-from utils.euler import generate_Euler_graph, euler_path
+from utils.euler import generate_Euler_graph, fixed_euler_path, fixed_random_euler
 from utils.kregular import generate_regular_graph
-from utils.hamilton import hamilton
+from utils.hamilton import hamilton, fixed_hamilton
 
 import networkx as nx
 import json
@@ -19,7 +19,6 @@ def get_zestaw2():
     return render_template('zestaw2.html')
 
 
-# Maciej Witkowski
 @zestaw2.route('/graphicseq', methods=['POST'])
 def graphic_seq():
     try:
@@ -58,13 +57,19 @@ def max_cohesive():
 def rand_euler():
     try:
         rand_num = request.form['eulerRandNum']
-        adj_matrix = generate_Euler_graph(int(rand_num))
-        matrix_str = matrix_to_string(adj_matrix)
-        G = graph_from_string(matrix_str, "adjmatrix")
-        path = euler_path(adj_matrix)
-        for i in range(len(path)):
-            path[i] -= 1
-        return json.dumps({"graphImage": get_plot_as_img(G), "adjMatrix": matrix_str, "path": path}), 200    
+        # adj_matrix = generate_Euler_graph(int(rand_num))
+        # matrix_str = matrix_to_string(adj_matrix)
+        # G = graph_from_string(matrix_str, "adjmatrix")
+        
+        G = fixed_random_euler(int(rand_num))
+        adj_matrix = nx.to_numpy_array(G).astype(int).tolist()
+        
+        Gc = G.copy()
+        path = fixed_euler_path(Gc)
+        # for i in range(len(path)):
+        #     path[i] -= 1
+        
+        return json.dumps({"graphImage": get_plot_as_img(G), "adjMatrix": matrix_to_string(adj_matrix), "path": str(path)}), 200    
     except Exception as e:
         return json.dumps({"exceptionMsg": str(e)}), 400
     
@@ -84,12 +89,13 @@ def rand_k_regular():
 def rand_hamilton():
     try:
         rand_num = request.form['randNum']
-        adj_matrix = generate_Euler_graph(int(rand_num))
-        matrix_str = matrix_to_string(adj_matrix)
-        G = graph_from_string(matrix_str, "adjmatrix")
-        path = hamilton(G)
-        print(path)
-        return json.dumps({"graphImage": get_plot_as_img(G), "path": path}), 200    
+        # adj_matrix = generate_Euler_graph(int(rand_num))
+        # matrix_str = matrix_to_string(adj_matrix)
+        # G = graph_from_string(matrix_str, "adjmatrix")
+        G = fixed_random_euler(int(rand_num))
+        path = fixed_hamilton(G)
+        
+        return json.dumps({"graphImage": get_plot_as_img(G), "path": str(path)}), 200    
     except Exception as e:
         return json.dumps({"exceptionMsg": str(e)}), 400
             

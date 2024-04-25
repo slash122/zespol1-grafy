@@ -55,3 +55,36 @@ def dfs(v,adj_list,visited,S):
             break
 
     return S
+
+
+
+def fixed_hamilton(G):
+    res = None
+    
+    for node in G.nodes:
+        res = hamiltonian(G, node)
+        if res:
+            break
+    
+    return res
+
+
+def hamiltonian(G, start_node):
+    N = len(G.nodes)
+    path = [start_node]
+
+    def visit(node):
+        if len(path) == N:
+            return path
+
+        for neighbor in G.neighbors(node):
+            if neighbor not in path:
+                path.append(neighbor)
+                result = visit(neighbor)
+                if result:
+                    return result
+                path.remove(neighbor)
+
+        return None
+
+    return visit(start_node)
