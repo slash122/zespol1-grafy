@@ -92,3 +92,15 @@ def inc_matrix_by_one(matrix):
         for j in range(len(matrix[i])):
             matrix[i][j] += 1
     return matrix
+
+
+def digraph_from_adjlist(graph_string):
+
+    adj_list = parse_adjacency_list(graph_string)
+    G = nx.DiGraph()
+    
+    for vertex, adjacent_vertices in adj_list.items():
+        G.add_node(vertex)
+        for adjacent_vertex in adjacent_vertices:
+            G.add_edge(vertex, adjacent_vertex)
+    return G

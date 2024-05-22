@@ -1,0 +1,59 @@
+{% extends 'index.html' %}
+{% block content %}
+<div class="container rounded" style="margin-top: 30px; padding: 20px; width: 900px; background-color: rgb(233, 233, 233);">
+    <h4 class="text-left" style="margin-bottom: 20px;">1. Page-Rank</h4>
+    <form id="graphCodeForm">
+        <div class="form-group" style="margin-top: 10px;">
+            <label for="graphCodeId" style="margin-left: 7px;">Wprowadź listę sąsiedztwa</label>
+            <textarea class="form-control" id="graphCode" rows="6"></textarea>
+        </div>
+        <button type="button" onclick="submitCodedGraph()" class="btn btn-primary" style="margin-top: 10px;">Submit</button>
+        <div class="form-group" id="exceptionContainer">
+        </div>
+    </form>
+</div> 
+
+<!-- Wykres -->
+<div class="container rounded" style="margin-top: 20px; padding: 20px; width: 900px; background-color: rgb(233, 233, 233);">
+    <h4 class="text-left" style="margin-bottom: 20px;">Wykres grafu</h4>
+    <img  alt="Graph" style="width: 700px; height: 600px;" id="graphImage">
+</div>
+
+ <!-- Reprezentacja grafu-->
+ <div class="container rounded" style="margin-top: 20px; padding: 20px; width: 900px; background-color: rgb(233, 233, 233);">
+    <h4 class="text-left" style="margin-bottom: 20px;">Wyniki</h4>
+    <div class="row">
+        <div class="form-group" style="margin-top: 10px;">
+            <label for="pageRankCustom" style="margin-left: 7px;">Metoda wektora obsadzeń</label>
+            <textarea class="form-control" id="pageRankCustom" rows="6" readonly></textarea>
+        </div>
+        <div class="form-group" style="margin-top: 10px;">
+            <label for="pageRankRandomWalk" style="margin-left: 7px;">Metoda błądzenia przypadkowego</label>
+            <textarea class="form-control" id="pageRankRandomWalk" rows="6" readonly></textarea>
+        </div>
+    </div>
+</div>
+
+<div class="container rounded" style="margin-top: 30px; padding: 20px; width: 900px; background-color: rgb(233, 233, 233);">
+    <h4 class="text-left" style="margin-bottom: 20px;">2. Najkrótsza zamknięta droga</h4>
+    <form id="networkShortestPath">
+        <button type="button" onclick="submitShortestPath()" class="btn btn-primary" style="margin-top: 10px;">Submit</button>
+        <div class="form-group" id="pathExceptionContainer">
+        </div>
+    </form>
+</div>
+
+<div class="container rounded" style="margin-top: 20px; padding: 20px; width: 900px; background-color: rgb(233, 233, 233);">
+    <h4 class="text-left" style="margin-bottom: 20px;">Cykl Początkowy</h4>
+    <label for="hamiltonLength" style="margin-left: 7px;">Długość</label>
+    <textarea class="form-control" id="hamiltonLength" rows="1" readonly></textarea>
+    <img alt="Graph" style="width: 700px; height: 600px;" id="graphHamilton">
+    <h4 class="text-left" style="margin-top: 30px; margin-bottom: 20px;">Cykl wyjściowy</h4>
+    <label for="annealingLength" style="margin-left: 7px;">Długość</label>
+    <textarea class="form-control" id="annealingLength" rows="1" readonly></textarea>
+    <img alt="Graph" style="width: 700px; height: 600px;" id="graphSimulatedAnnealing">
+</div>
+</div>
+
+<script src="{{ url_for('static', filename='zestaw6.js') }}"></script>
+{% endblock %}
