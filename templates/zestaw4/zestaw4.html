@@ -1,0 +1,48 @@
+{% extends 'index.html' %}
+{% block content %}
+<div class="container rounded" style="margin-top: 30px; padding: 20px; width: 900px; background-color: rgb(233, 233, 233);">
+    <h4 class="text-left" style="margin-bottom: 20px;">1. Losowy digraf</h4>
+    <form>
+      <div class="row g-3 align-items-center">
+        <div class="col-auto">
+          <label class="col-form-label">Wprowadź parametry. n:</label>
+        </div>
+        <div class="col-auto" style="padding: 2px;">
+          <input type="text" id="randomDigraphParam1" class="form-control form-control-sm" style="width: 70px;">
+        </div>
+        <div class="col-auto">
+          <label class="col-form-label">, p:</label>
+        </div>
+        <div class="col-auto" style="padding: 2px;">
+            <input type="text" id="randomDigraphParam2" class="form-control form-control-sm" style="width: 70px;">
+        </div>
+        </div>
+        <button type="button" onclick="processRandomDigraph()" class="btn btn-primary" style="margin-top: 10px;">Submit</button>
+        <div class="form-group" id="randomDigraphExceptionContainer">
+        </div>
+    </form>
+  </div>
+
+<div class="container rounded" style="margin-top: 20px; padding: 20px; width: 900px; background-color: rgb(233, 233, 233);">
+    <h4 class="text-left" style="margin-bottom: 20px;">Wykres grafu</h4>
+    <img alt="Graph" style="width: 700px; height: 600px;" id="graphImage">
+</div>
+
+<div class="container rounded" style="margin-top: 30px; padding: 20px; width: 900px; background-color: rgb(233, 233, 233);">
+    <h4 class="text-left" style="margin-bottom: 20px;">2. Kosaraju:</h4>
+    <form>
+        <label style="margin-left: 7px; margin-top: 10px;">Wynik</label>
+        <input type="text" id="kosaraju" class="form-control form-control-sm" style="width: 270px;" readonly>
+    </form>
+</div> 
+
+<div class="container rounded" style="margin-top: 30px; padding: 20px; width: 900px; background-color: rgb(233, 233, 233);">
+    <h4 class="text-left" style="margin-bottom: 20px;">3. Bellman-Ford:</h4>
+    <form>
+        <label style="margin-left: 7px; margin-top: 10px;">Wynik</label>
+        <input type="text" id="bellmanFord" class="form-control form-control-sm" style="width: 270px;" readonly>
+    </form>
+</div> 
+
+<script src="{{ url_for('static', filename='zestaw4.js') }}"></script>
+{% endblock %}
