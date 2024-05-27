@@ -89,7 +89,7 @@ def assign_edge_weights(subgraph, lower_bound, upper_bound):
 
 
 def bellman_ford(graph, source):
-    graph = assign_edge_weights(graph, -5, 10)
+    graph = assign_edge_weights(graph, -5, 50)
 
     distance = {node: float('inf') for node in graph.nodes()}
     distance[source] = 0
